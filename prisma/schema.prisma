@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String
+  posts PackingOrder[]
+}
+
+model PackingOrder {
+  id          String         @id @default(uuid()) // Unique identifier
+  name        String
+  location    String?
+  date        DateTime
+  bartenders  Int
+  guests      Int
+  notes       String?
+  startTime   DateTime?
+  endTime     DateTime?
+  kosher      Boolean        @default(false)
+  createdAt   DateTime       @default(now())      // Timestamp for order creation
+  updatedAt   DateTime       @updatedAt           // Timestamp for order update
+  completed   Boolean        @default(false)
+  labels      PackingLabel[] // Relation to the PackingLabel model
+
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+model PackingLabel {
+  id            String       @id @default(uuid()) // Unique identifier
+  key           String                                    // The label key (e.g., "Color", "Size")
+  value         String                                    // The label value (e.g., "Red", "Large")
+  completed     Boolean
+  comment       String?
+  
+  packingOrder  PackingOrder @relation(fields: [packingOrderId], references: [id]) // Relation to PackingOrder
+  packingOrderId String
+}
