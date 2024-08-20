@@ -1,10 +1,10 @@
 "use server";
 
-import { getSession } from "@/actions";
+import { getSession } from "@/auth/actions/getSession";
 import { redirect } from "next/navigation";
 
 export async function logout() {
   const session = await getSession();
   session.destroy();
-  redirect("/login");
+  redirect("/signin");
 }

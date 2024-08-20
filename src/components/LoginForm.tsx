@@ -1,6 +1,6 @@
 "use client";
 
-import { login } from "@/actions";
+import { login } from "@/auth/actions";
 import { useFormState } from "react-dom";
 import Link from "next/link";
 

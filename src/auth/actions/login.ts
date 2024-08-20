@@ -1,6 +1,6 @@
 "use server";
 
-import { getSession } from "@/actions";
+import { getSession } from "@/auth/actions/getSession";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
 
