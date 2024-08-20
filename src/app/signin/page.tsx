@@ -3,8 +3,8 @@ import LoginForm from "@/components/LoginForm";
 
 export default function Login() {
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
-      <div className="px-16 py-12 flex flex-col rounded-xl space-y-12">
+    <div className="w-screen h-[70vh] flex items-center justify-center">
+      <div className="py-12 flex flex-col rounded-xl space-y-12">
         <div>
           <h1 className="font-semibold text-3xl">Login</h1>
           <h2 className="mt-2 font-light">

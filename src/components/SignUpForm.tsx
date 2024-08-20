@@ -6,12 +6,15 @@ import Link from "next/link";
 
 export default function SignUpForm() {
   // TODO: Encrypt form data
-  const [formState, formAction] = useFormState(signup, {
+  const [formState, formAction] = useFormState<any, FormData>(signup, {
     errors: {},
   });
   console.log("THIS IS " + formState);
   return (
-    <form action={formAction}>
+    <form action={formAction} className="w-96">
+      {formState?.errors?._form && (
+        <p className=" text-xs text-red-500">{formState.errors._form}</p>
+      )}
       <h1>First Name</h1>
       <input
         type="text"
@@ -35,6 +38,11 @@ export default function SignUpForm() {
         }`}
         placeholder="Enter your last name"
       />
+      {formState?.errors?.last_name && (
+        <p className="mt-2 text-xs text-red-500">
+          {formState.errors.last_name.join(", ")}
+        </p>
+      )}
       <h1 className="mt-4">Email Address</h1>
       <input
         type="email"
@@ -44,6 +52,9 @@ export default function SignUpForm() {
         }`}
         placeholder="Enter your email address"
       />
+      {formState?.errors?.email && (
+        <p className="mt-2 text-xs text-red-500">{formState.errors.email}</p>
+      )}
       <h1 className="mt-4">Password</h1>
       <input
         type="password"
@@ -53,15 +64,25 @@ export default function SignUpForm() {
         }`}
         placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
       />
+      {formState?.errors?.password && (
+        <p className="mt-2 text-xs text-red-500">
+          {formState.errors.password.join(", ")}
+        </p>
+      )}
       <h1 className="mt-4">Confirm Password</h1>
       <input
         type="password"
         name="conf_password"
         className={`w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none ${
-          formState?.errors?.password ? "border-red-500" : ""
+          formState?.errors?.conf_password ? "border-red-500" : ""
         }`}
         placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
       />
+      {formState?.errors?.conf_password && (
+        <p className="mt-2 text-xs text-red-500">
+          {formState.errors.conf_password}
+        </p>
+      )}
 
       <button className="w-full h-12 bg-black text-white rounded-lg mt-8">
         Sign Up

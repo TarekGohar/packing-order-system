@@ -3,6 +3,7 @@
 import { getSession } from "@/auth/actions/getSession";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
+import { createHash } from "crypto";
 
 export async function signin(
   prevState: { error: undefined | string },
@@ -11,25 +12,27 @@ export async function signin(
   const session = await getSession();
   console.log("Session:", formData);
 
-  const email = formData.get("email") as string;
+  const email = (formData.get("email") as string).toLowerCase();
   const password = formData.get("password") as string;
 
-  // CHECK USER IN DB
-  // const user = await db.getUser({username,password})
+  // Check DB for user existance
+  const signInUser = await db.user.findFirst({ where: { email } });
 
-  const user = await db.user.findFirst({
-    where: {
-      email,
-    },
-  });
-
-  if (!user) {
-    console.log("Invalid username");
-    return { error: "Invalid username" };
+  if (!signInUser) {
+    console.log("Email does not exists");
+    return { error: "Invalid email or password" };
   }
 
-  session.userId = "1";
-  session.username = email;
+  const hash = createHash("sha256");
+  const hashedPassword = hash.update(password).digest("hex");
+
+  if (hashedPassword !== signInUser.password_hash) {
+    console.log("Invalid password");
+    return { error: "Invalid email or password" };
+  }
+
+  session.userId = signInUser.id;
+  session.email = email;
   session.isLoggedIn = true;
 
   await session.save();

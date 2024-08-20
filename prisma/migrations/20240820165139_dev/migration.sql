@@ -2,16 +2,9 @@
 CREATE TABLE "User" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "name" TEXT NOT NULL
-);
-
--- CreateTable
-CREATE TABLE "UserSession" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "userId" TEXT NOT NULL,
-    "expiresAt" DATETIME NOT NULL,
-    CONSTRAINT "UserSession_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+    "first_name" TEXT NOT NULL,
+    "last_name" TEXT NOT NULL,
+    "password_hash" TEXT NOT NULL
 );
 
 -- CreateTable
