@@ -1,11 +1,11 @@
 "use client";
 
-import { login } from "@/auth/actions";
+import { signin } from "@/auth/actions";
 import { useFormState } from "react-dom";
 import Link from "next/link";
 
 export default function LoginForm() {
-  const [state, formAction] = useFormState<any, FormData>(login, undefined);
+  const [state, formAction] = useFormState<any, FormData>(signin, undefined);
 
   return (
     <form action={formAction}>
@@ -32,7 +32,7 @@ export default function LoginForm() {
       <div className="mt-4 flex justify-center items-center gap-x-1">
         <span>Don&apos;t have an account yet?</span>
         <Link href="/signup" className="font-medium">
-          Sign up
+          Sign Up
         </Link>
       </div>
     </form>

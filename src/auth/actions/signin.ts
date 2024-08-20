@@ -4,10 +4,7 @@ import { getSession } from "@/auth/actions/getSession";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
 
-const TEST_USERNAME = "test";
-const TEST_ISPRO = false;
-
-export async function login(
+export async function signin(
   prevState: { error: undefined | string },
   formData: FormData
 ) {
@@ -28,15 +25,11 @@ export async function login(
 
   if (!user) {
     console.log("Invalid username");
-    console.log("Form username:", email);
-    console.log("Test username:", TEST_USERNAME);
-    console.log("Test password: ", password);
     return { error: "Invalid username" };
   }
 
   session.userId = "1";
   session.username = email;
-  session.isPro = TEST_ISPRO;
   session.isLoggedIn = true;
 
   await session.save();

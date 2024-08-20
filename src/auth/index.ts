@@ -14,11 +14,12 @@ export const defaultSession: SessionData = {
 
 export const sessionOptions: SessionOptions = {
   password: process.env.SECRET_KEY!,
-  cookieName: "lama-session",
+  cookieName: "gtsession",
   cookieOptions: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60, // 1 hour
+    sameSite: true,
   },
   ttl: 24 * 60 * 60, // 24 hours
 };

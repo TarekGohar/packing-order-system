@@ -1,3 +1,4 @@
 export { getSession } from "./getSession";
-export { login } from "./login";
-export { logout } from "./logout";
+export { signin } from "./signin";
+export { signout } from "./signout";
+export { signup } from "./signup";
