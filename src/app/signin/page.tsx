@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LoginForm from "@/components/LoginForm";
+import SignInForm from "@/components/SignInForm";
 
 export default function Login() {
   return (
@@ -56,7 +56,7 @@ export default function Login() {
 
         {/* Login Form */}
         <div>
-          <LoginForm />
+          <SignInForm />
         </div>
       </div>
     </div>

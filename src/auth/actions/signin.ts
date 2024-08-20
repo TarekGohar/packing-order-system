@@ -32,7 +32,7 @@ export async function signin(
   }
 
   session.userId = signInUser.id;
-  session.email = email;
+  session.email = email.toLowerCase();
   session.isLoggedIn = true;
 
   await session.save();

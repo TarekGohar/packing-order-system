@@ -3,8 +3,9 @@
 import { signin } from "@/auth/actions";
 import { useFormState } from "react-dom";
 import Link from "next/link";
+import { relative } from "path";
 
-export default function LoginForm() {
+export default function SignInForm() {
   const [state, formAction] = useFormState<any, FormData>(signin, undefined);
 
   return (

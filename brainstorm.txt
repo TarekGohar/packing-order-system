@@ -1,0 +1,12 @@
+Pages:
+
+Sign up: Create general account. Allow sign in with google, apple, Facebook.
+
+Homepage: Recently-made packing orders. Upcoming event packing orders. Create new packing order. View all packing orders.
+
+Packing Orders Page: See all user packing orders. Filter by different values.
+
+Packing Order Create Page: 
+
+Packing Order Manage Page: Select, add new lines, change numbers, print.
+
