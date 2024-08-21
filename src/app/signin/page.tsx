@@ -3,8 +3,8 @@ import SignInForm from "@/components/SignInForm";
 
 export default function Login() {
   return (
-    <div className="w-screen h-[70vh] flex items-center justify-center">
-      <div className="py-12 flex flex-col rounded-xl space-y-12">
+    <div className="w-full min-h-[90vh] sm:min-h-screen flex flex-col items-center justify-center">
+      <div className="w-4/5 max-w-md flex flex-col rounded-xl space-y-12">
         <div>
           <h1 className="font-semibold text-3xl">Login</h1>
           <h2 className="mt-2 font-light">
@@ -13,7 +13,7 @@ export default function Login() {
 
           {/* Social Logins */}
           <div className="mt-8 flex flex-row gap-x-4">
-            <button className="w-32 h-12 flex items-center justify-center rounded-lg border-2 opacity-50">
+            <button className="w-full h-12 flex items-center justify-center rounded-lg border-2 opacity-50">
               <Image
                 src={"/images/apple_logo.svg"}
                 alt="Apple Inc. logo"
@@ -23,7 +23,7 @@ export default function Login() {
               />
             </button>
 
-            <button className="w-32 h-12 flex items-center justify-center rounded-lg border-2 opacity-50">
+            <button className="w-full h-12 flex items-center justify-center rounded-lg border-2 opacity-50">
               <Image
                 src={"/images/google_logo.svg"}
                 alt="Google Inc. logo"
@@ -33,7 +33,7 @@ export default function Login() {
               />
             </button>
 
-            <button className="w-32 h-12 flex items-center justify-center rounded-lg border-2 opacity-50">
+            <button className="w-full h-12 flex items-center justify-center rounded-lg border-2 opacity-50">
               <Image
                 src={"/images/x_logo.svg"}
                 alt="X Inc. logo"

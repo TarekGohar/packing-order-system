@@ -6,7 +6,7 @@ interface SessionProps {
   session: IronSession<SessionData>;
 }
 
-export default async function RecentlyViewed({ session }: SessionProps) {
+export default async function MostRecent({ session }: SessionProps) {
   const orders = await db.packingOrder.findMany({
     where: {
       author: {
@@ -14,7 +14,7 @@ export default async function RecentlyViewed({ session }: SessionProps) {
       },
     },
     orderBy: {
-      lastViewedAt: "desc",
+      date: "desc",
     },
     take: 5,
   });
@@ -22,7 +22,7 @@ export default async function RecentlyViewed({ session }: SessionProps) {
   if (orders.length === 0) {
     return (
       <div className="space-y-2">
-        <h1 className="text-xl">Recently Viewed</h1>
+        <h1 className="text-xl">Most Recent</h1>
         <p className="h-36 p-4 bg-neutral-100 rounded-xl">No orders found</p>
       </div>
     );
