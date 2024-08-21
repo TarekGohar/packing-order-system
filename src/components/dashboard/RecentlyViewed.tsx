@@ -55,11 +55,11 @@ export default async function RecentlyViewed({ session }: SessionProps) {
                 </div>
 
                 {order.completed ? (
-                  <div className="mx-auto bg-green-500/80 py-[6px] px-[8px] rounded-2xl text-white">
+                  <div className="mx-auto bg-green-500 py-[6px] px-[8px] rounded-2xl text-green-100">
                     Completed
                   </div>
                 ) : (
-                  <div className="mx-auto bg-red-500/80 py-[6px] px-[8px] rounded-2xl text-white">
+                  <div className="mx-auto bg-red-500/80 py-[6px] px-[8px] rounded-2xl text-red-100">
                     Incomplete
                   </div>
                 )}

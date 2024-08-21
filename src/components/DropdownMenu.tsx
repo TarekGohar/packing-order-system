@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function DropdownMenu() {
   return (
-    <div className="flex justify-center">
+    <div className="sm:flex justify-center hidden">
       <Popover className="group">
         <PopoverButton className="transition-none flex items-center justify-center gap-x-2 focus:outline-none">
           <h2 className="text-sm/6 font-normal text-neutral-400 focus:outline-none group-active:text-neutral-600 group-hover:text-neutral-500 duration-200">
@@ -21,25 +21,18 @@ export default function DropdownMenu() {
         <PopoverPanel
           transition
           anchor={{ to: "bottom end", offset: "10px", gap: "20px" }}
-          className="shadow-md divide-y divide-neutral-200/5 opacity-[98%] rounded-xl bg-neutral-100 text-sm/6 transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-y-1 data-[closed]:opacity-0"
+          className="shadow-md divide-y divide-neutral-200/5 opacity-[98%] rounded-xl bg-neutral-50 text-sm/6 transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-y-1 data-[closed]:opacity-0"
         >
           <div className="p-3">
             <Link
-              className="block rounded-lg py-2 px-3 transition hover:bg-white/5"
-              href="#"
+              className="block rounded-lg py-2 px-3 transition hover:bg-neutral-100 active:bg-neutral-200 duration-150"
+              href="/orders/create"
             >
               <p className="font-semibold text-black">Create</p>
               <p className="text-black/50">Create a new packing order</p>
             </Link>
             <Link
-              className="block rounded-lg py-2 px-3 transition hover:bg-white/5"
-              href="#"
-            >
-              <p className="font-semibold text-black">Manage</p>
-              <p className="text-black/50">Manage existing packing orders</p>
-            </Link>
-            <Link
-              className="block rounded-lg py-2 px-3 transition hover:bg-white/5"
+              className="block rounded-lg py-2 px-3 transition hover:bg-neutral-100 active:bg-neutral-200 duration-150"
               href="#"
             >
               <p className="font-semibold text-black">View</p>

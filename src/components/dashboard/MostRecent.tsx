@@ -23,14 +23,14 @@ export default async function MostRecent({ session }: SessionProps) {
   if (orders.length === 0) {
     return (
       <div className="space-y-2">
-        <h1 className="text-xl">Recently Viewed</h1>
+        <h1 className="text-xl">Most Recent</h1>
         <p className="h-36 p-4 bg-neutral-100 rounded-xl">No orders found</p>
       </div>
     );
   } else {
     return (
       <div className="space-y-4">
-        <h1 className="text-2xl font-medium">Recently Viewed</h1>
+        <h1 className="text-2xl font-medium">Most Recent</h1>
         <ul className="divide-y rounded-lg overflow-hidden">
           <div className="grid grid-cols-4 py-3 text-center text-sm text-white font-semibold bg-neutral-300 divide-x">
             <h2>Name</h2>
@@ -55,11 +55,11 @@ export default async function MostRecent({ session }: SessionProps) {
                 </div>
 
                 {order.completed ? (
-                  <div className="mx-auto bg-green-500/80 py-[6px] px-[8px] rounded-2xl text-white">
+                  <div className="mx-auto bg-green-500 py-[6px] px-[8px] rounded-2xl text-green-100">
                     Completed
                   </div>
                 ) : (
-                  <div className="mx-auto bg-red-500/80 py-[6px] px-[8px] rounded-2xl text-white">
+                  <div className="mx-auto bg-red-500/80 py-[6px] px-[8px] rounded-2xl text-red-100">
                     Incomplete
                   </div>
                 )}

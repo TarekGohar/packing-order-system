@@ -50,10 +50,8 @@ export default async function ProfileMenu({ session }: ProfileMenuProps) {
               className="block rounded-lg py-2 px-3 transition hover:bg-white/5"
               href="#"
             >
-              <p className="font-semibold text-black">Help Center</p>
-              <p className="text-black/50">
-                Get assistance with the app or service
-              </p>
+              <p className="font-semibold text-black">Preferences</p>
+              <p className="text-black/50">Change user preferences</p>
             </a>
           </div>
           <form action={signout}>
