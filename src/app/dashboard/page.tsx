@@ -17,7 +17,7 @@ export default async function Dashboard() {
       <Navbar />
       <div className="container mx-auto max-w-6xl px-6 space-y-8">
         <div className="text-3xl font-semibold">Dashboard</div>
-        <div className="md:px-6 space-y-8">
+        <div className="md:px-6 space-y-8 ">
           <OrderActions />
           <MostRecent session={session} />
           <RecentlyViewed session={session} />

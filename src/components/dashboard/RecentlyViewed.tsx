@@ -31,8 +31,8 @@ export default async function RecentlyViewed({ session }: SessionProps) {
     return (
       <div className="space-y-4">
         <h1 className="text-2xl font-medium">Recently Viewed</h1>
-        <ul className="h-36 bg-neutral-100 rounded-xl">
-          <div className="grid grid-cols-4 py-4 rounded-t-xl text-center text-lg text-white font-semibold bg-neutral-400">
+        <ul className="divide-y rounded-lg overflow-hidden">
+          <div className="grid grid-cols-4 py-3 text-center text-sm text-white font-semibold bg-neutral-300 divide-x">
             <h2>Name</h2>
             <h2>Location</h2>
             <h2>Date</h2>
@@ -41,27 +41,28 @@ export default async function RecentlyViewed({ session }: SessionProps) {
           {orders.map((order, index) => (
             <li
               key={order.id}
-              className={`w-full py-3 font-medium text-center text-white ${
-                index % 2 === 1 ? "bg-neutral-300" : "bg-neutral-200"
-              }`}
+              className="bg-neutral-50/40 grid grid-cols-1 font-medium text-center text-xs text-neutral-500 divide-y hover:bg-neutral-50 duration-150"
             >
               <Link
                 href={`/orders/view/${order.id}`}
-                className="grid grid-cols-4"
+                className="grid grid-cols-4 truncate sm:whitespace-normal w-full py-3"
               >
-                <div className="truncate sm:whitespace-normal px-2">
-                  {order.name}
-                </div>
-                <div className="truncate sm:whitespace-normal px-1">
-                  {order.location}
-                </div>
-                <div className="truncate sm:whitespace-normal px-1">
+                <div className="mx-auto my-auto">{order.name}</div>
+                <div className="mx-auto my-auto">{order.location}</div>
+                <div className="mx-auto my-auto">
                   {order.date.getDate()}/{order.date.getMonth() + 1}/
                   {order.date.getFullYear()}
                 </div>
-                <div className="truncate sm:whitespace-normal px-2">
-                  {order.completed ? "Completed" : "Incomplete"}
-                </div>
+
+                {order.completed ? (
+                  <div className="mx-auto bg-green-500/80 py-[6px] px-[8px] rounded-2xl text-white">
+                    Completed
+                  </div>
+                ) : (
+                  <div className="mx-auto bg-red-500/80 py-[6px] px-[8px] rounded-2xl text-white">
+                    Incomplete
+                  </div>
+                )}
               </Link>
             </li>
           ))}
