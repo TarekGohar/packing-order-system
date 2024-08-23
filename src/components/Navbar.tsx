@@ -4,8 +4,7 @@ import React, { useState } from "react";
 import DropdownMenu from "./DropdownMenu";
 import ProfileMenu from "./ProfileMenu";
 import { getSession } from "@/auth/actions";
-
-// Implement responsive navbar with hamburger button
+import { sessionOptions } from "@/auth";
 
 export default async function Navbar() {
   const session = await getSession();

@@ -4,8 +4,6 @@ import OrderActions from "@/components/dashboard/OrderActions";
 import RecentlyViewed from "@/components/dashboard/RecentlyViewed";
 import { db } from "@/db";
 import Navbar from "@/components/Navbar";
-import { redirect } from "next/navigation";
-import { date } from "zod";
 
 function capitalize(str: string): string {
   if (!str) return str; // Guard clause for empty string
@@ -65,11 +63,6 @@ function getFullDate(date: Date): string {
 
 export default async function Dashboard() {
   const session = await getSession();
-  console.log(session);
-
-  if (!session.isLoggedIn) {
-    redirect("/signin");
-  }
 
   const user = await db.user.findUnique({ where: { email: session.email } });
 
@@ -82,15 +75,18 @@ export default async function Dashboard() {
   return (
     <section>
       <Navbar />
-      <div className="container mx-auto max-w-6xl px-6">
-        <div className="text-3xl font-bold mb-4">Dashboard</div>
-        <div className="font-semibold text-xl text-neutral-600">
-          Hello, {capitalize(user?.first_name)}
+      <div className="container mx-auto px-6">
+        <div className="rounded-xl bg-cyan-600/40 bg-gradient-to-r from-cyan-600/40 p-8">
+          <h1 className="text-3xl font-bold mb-4 text-cyan-700">Dashboard</h1>
+          <div className="font-semibold text-xl text-cyan-700/90">
+            Hello, {capitalize(user?.first_name)}
+          </div>
+          <div className="font-medium text-cyan-700/90">
+            Today is {getFullDate(today)}
+          </div>
         </div>
-        <div className="mb-8 font-medium text-neutral-500">
-          Today is {getFullDate(today)}
-        </div>
-        <div className="md:px-6 space-y-8 ">
+
+        <div className="mt-10 md:px-6 space-y-8 ">
           <OrderActions />
           <MostRecent session={session} />
           <RecentlyViewed session={session} />

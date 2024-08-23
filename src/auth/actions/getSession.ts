@@ -10,5 +10,6 @@ export async function getSession() {
   if (!session.isLoggedIn) {
     session.isLoggedIn = defaultSession.isLoggedIn;
   }
+
   return session;
 }

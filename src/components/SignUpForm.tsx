@@ -9,9 +9,9 @@ export default function SignUpForm() {
   const [formState, formAction] = useFormState<any, FormData>(signup, {
     errors: {},
   });
-  console.log("THIS IS " + formState);
+
   return (
-    <form action={formAction} className="w-96">
+    <form action={formAction} className="w-full">
       {formState?.errors?._form && (
         <p className=" text-xs text-red-500">{formState.errors._form}</p>
       )}
