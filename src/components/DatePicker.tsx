@@ -2,6 +2,10 @@
 
 import React, { useState, ChangeEvent } from "react";
 
+interface DatePickerProps {
+  error: boolean;
+}
+
 const formatDate = (dateString: string): string => {
   const cleanDate = dateString.replace(/\D/g, ""); // Remove all non-digit characters
 
@@ -19,8 +23,9 @@ const formatDate = (dateString: string): string => {
   )}`; // Day/Month/Year
 };
 
-const DatePicker: React.FC = () => {
+export function DatePicker({ error }: DatePickerProps) {
   const [inputValue, setInputValue] = useState<string>("");
+  console.log(error);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -39,12 +44,12 @@ const DatePicker: React.FC = () => {
         pattern="\d{2}/\d{2}/\d{4}"
         inputMode="numeric"
         maxLength={10} // Prevent entering more characters than DD/MM/YYYY
-        className={`w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none ${
-          true ? "border-red-500" : ""
+        className={`form-btn ${
+          error ? "border-red-500" : "focus:border-blue-500"
         }`}
       />
     </div>
   );
-};
+}
 
 export default DatePicker;

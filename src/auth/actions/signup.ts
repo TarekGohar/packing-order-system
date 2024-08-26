@@ -5,6 +5,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { createHash } from "crypto";
+import { User } from "@prisma/client";
 
 const UserSchema = z
   .object({
@@ -39,28 +40,23 @@ export async function signup(prevState: SignUpFormState, formData: FormData) {
   const session = await getSession();
   console.log("Session:", formData);
 
-  const first_name = formData.get("first_name") as string;
-  const last_name = formData.get("last_name") as string;
-  const email = formData.get("email") as string;
-  const phone = formData.get("phone") as string;
-  const password = formData.get("password") as string;
-  const conf_password = formData.get("conf_password") as string;
-
-  const result = UserSchema.safeParse({
+  const data = {
     first_name: formData.get("first_name") as string,
     last_name: formData.get("last_name") as string,
     email: formData.get("email") as string,
     password: formData.get("password") as string,
     conf_password: formData.get("conf_password") as string,
-  });
+  };
+
+  const result = UserSchema.safeParse(data);
 
   // Check DB for existing user
   let user = null;
-  if (email) {
+  if (data.email) {
     console.log("Checking for existing user");
     user = await db.user.findFirst({
       where: {
-        email,
+        email: data.email,
       },
     });
   }
@@ -80,14 +76,15 @@ export async function signup(prevState: SignUpFormState, formData: FormData) {
   }
 
   const hash = createHash("sha256");
+  let newUser: User;
 
   try {
-    await db.user.create({
+    newUser = await db.user.create({
       data: {
-        first_name: first_name.toLowerCase(),
-        last_name: last_name.toLowerCase(),
-        email: email.toLowerCase(),
-        password_hash: hash.update(password).digest("hex"),
+        first_name: data.first_name.toLowerCase(),
+        last_name: data.last_name.toLowerCase(),
+        email: data.email.toLowerCase(),
+        password_hash: hash.update(data.password).digest("hex"),
       },
     });
   } catch (error) {
@@ -98,21 +95,12 @@ export async function signup(prevState: SignUpFormState, formData: FormData) {
     };
   }
 
-  const newUser = await db.user.findFirst({
-    where: {
-      email, // Replace with the email you're searching for
-    },
-    select: {
-      id: true, // Only selecting the user's ID
-    },
-  });
-
-  session.userId = newUser!.id;
-  session.email = email;
+  session.userId = newUser.id;
+  session.email = data.email;
   session.isLoggedIn = true;
 
   await session.save();
-  console.log("Logged in as", email);
+  console.log("Logged in as", data.email);
 
   redirect("/dashboard");
 }

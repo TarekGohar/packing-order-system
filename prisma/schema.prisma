@@ -17,6 +17,7 @@ model User {
   last_name String
   password_hash String
   orders PackingOrder[]
+  templates PackingOrder[]
 }
 
 model PackingOrder {
@@ -27,9 +28,6 @@ model PackingOrder {
   bartenders  Int
   guests      Int
   notes       String?
-  startTime   DateTime?      
-  endTime     DateTime?      
-  kosher      Boolean        @default(false)
   createdAt   DateTime       @default(now())      // Timestamp for order creation
   lastViewedAt DateTime
   updatedAt   DateTime       @updatedAt           // Timestamp for order update

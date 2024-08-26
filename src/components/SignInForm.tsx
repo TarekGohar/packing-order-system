@@ -6,7 +6,9 @@ import Link from "next/link";
 import { relative } from "path";
 
 export default function SignInForm() {
-  const [state, formAction] = useFormState<any, FormData>(signin, undefined);
+  const [state, formAction] = useFormState<any, FormData>(signin, {
+    errors: {},
+  });
 
   return (
     <form action={formAction}>

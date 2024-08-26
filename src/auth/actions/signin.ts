@@ -6,7 +6,7 @@ import { db } from "@/db";
 import { createHash } from "crypto";
 
 export async function signin(
-  prevState: { error: undefined | string },
+  prevState: { error: null | string },
   formData: FormData
 ) {
   const session = await getSession();

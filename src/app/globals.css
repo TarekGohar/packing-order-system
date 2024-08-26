@@ -44,3 +44,7 @@
 .open .hamburger-bottom {
   transform: rotate(-45deg) translateX(-10px) translateY(6px);
 }
+
+.form-btn {
+  @apply w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none
+}
