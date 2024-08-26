@@ -90,5 +90,5 @@ export async function createNew(
   }
 
   console.log("Created order", order);
-  redirect(`/orders/${order.id}?edit`);
+  redirect(`/orders/${order.id}?edit=`);
 }

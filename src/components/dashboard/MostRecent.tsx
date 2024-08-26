@@ -44,7 +44,7 @@ export default async function MostRecent({ session }: SessionProps) {
               className="bg-neutral-50/40 grid grid-cols-1 font-medium text-center text-xs text-neutral-500 divide-y hover:bg-neutral-50 duration-150"
             >
               <Link
-                href={`/orders/view/${order.id}`}
+                href={`/orders/${order.id}`}
                 className="grid grid-cols-4 truncate sm:whitespace-normal w-full py-3"
               >
                 <div className="mx-auto my-auto">{order.name}</div>

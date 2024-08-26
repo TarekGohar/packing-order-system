@@ -46,5 +46,15 @@
 }
 
 .form-btn {
-  @apply w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none
+  @apply w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }

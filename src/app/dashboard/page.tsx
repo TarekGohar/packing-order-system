@@ -58,7 +58,7 @@ function getFullDate(date: Date): string {
 
   return `${weekdays[date.getDay()]}, ${
     months[date.getMonth() + 1]
-  } ${date.getDate()}${getDaySuffix(date.getDate())}, ${date.getFullYear()}`;
+  } ${date.getDate()}${getDaySuffix(date.getDate())} ${date.getFullYear()}`;
 }
 
 export default async function Dashboard() {

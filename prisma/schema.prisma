@@ -17,7 +17,6 @@ model User {
   last_name String
   password_hash String
   orders PackingOrder[]
-  templates PackingOrder[]
 }
 
 model PackingOrder {
@@ -32,7 +31,7 @@ model PackingOrder {
   lastViewedAt DateTime
   updatedAt   DateTime       @updatedAt           // Timestamp for order update
   completed   Boolean        @default(false)
-  labels      PackingLabel[] // Relation to the PackingLabel model
+  labels      PackingLabel[]
 
   author    User    @relation(fields: [authorId], references: [id])
   authorId  String
@@ -41,6 +40,7 @@ model PackingOrder {
 model PackingLabel {
   id            String       @id @default(uuid()) // Unique identifier
   key           String                                    // The label key (e.g., "Color", "Size")
+  currentValue  String       @default("0")
   value         String                                    // The label value (e.g., "Red", "Large")
   completed     Boolean
   comment       String?
