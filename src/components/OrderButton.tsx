@@ -1,36 +1,31 @@
 "use client";
 
-import { redirect, useRouter } from "next/navigation";
-import { parse } from "path";
+import { PackingLabel } from "@prisma/client";
 import React, { useState, useRef, useEffect } from "react";
-import { set } from "zod";
 
 interface OrderButtonProps {
   holdTime: number;
-  name: string;
-  curVal: string;
-  value: string;
-  comment: string;
+  label: PackingLabel;
 }
 
 export default function OrderButton({
-  name,
-  value,
-  curVal,
-  comment,
-  holdTime = 400,
+  label: { id, key, value, currentValue, comment },
+  holdTime = 500,
 }: OrderButtonProps) {
   const [isHeld, setIsHeld] = useState(false);
   const [isHolding, setIsHolding] = useState(false);
   const [tapCount, setTapCount] = useState(0);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const timerRef = useRef<null | NodeJS.Timeout>(null);
-  const [currentNumber, setCurrentNumber] = useState(parseInt(curVal, 10) || 0);
+  const [currentNumber, setCurrentNumber] = useState(
+    parseInt(currentValue, 10) || 0
+  );
   const [commentValue, setCommentValue] = useState(comment);
+  const [startY, setStartY] = useState<number | null>(null); // Track initial Y position for touch
 
-  function onHold() {
+  const onHold = () => {
     setIsHeld(!isHeld);
-  }
+  };
 
   const handleDoubleTap = React.useCallback(() => {
     if (!isHeld) {
@@ -38,9 +33,42 @@ export default function OrderButton({
     }
   }, [isHeld, value]);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!isInputFocused) {
+      setIsHolding(true);
+      setStartY(e.touches[0].clientY); // Track initial Y position
+
+      timerRef.current = setTimeout(() => {
+        onHold(); // Trigger onHold event after the specified hold time
+      }, holdTime);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsHolding(false);
+    if (timerRef.current !== null) {
+      clearTimeout(timerRef.current); // Clear timer if released early
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (startY !== null) {
+      const currentY = e.touches[0].clientY;
+
+      // If vertical movement exceeds 10 pixels, cancel the hold action
+      if (Math.abs(currentY - startY) > 10) {
+        setIsHolding(false);
+        if (timerRef.current !== null) {
+          clearTimeout(timerRef.current); // Clear timer due to movement
+        }
+      }
+    }
+  };
+
   const handleMouseDown = () => {
     if (!isInputFocused) {
       setIsHolding(true);
+
       timerRef.current = setTimeout(() => {
         onHold(); // Trigger onHold event after the specified hold time
       }, holdTime);
@@ -51,13 +79,6 @@ export default function OrderButton({
     setIsHolding(false);
     if (timerRef.current !== null) {
       clearTimeout(timerRef.current); // Clear timer if released early
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setIsHolding(false);
-    if (timerRef.current !== null) {
-      clearTimeout(timerRef.current as NodeJS.Timeout); // Clear timer if mouse leaves the button
     }
   };
 
@@ -82,60 +103,65 @@ export default function OrderButton({
 
   return (
     <button
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onTouchStart={handleMouseDown}
-      onTouchEnd={handleMouseUp}
-      onMouseLeave={handleMouseLeave}
+      type="button"
+      onMouseDown={handleMouseDown} // Handle mouse hold on desktop
+      onMouseUp={handleMouseUp} // Handle mouse release on desktop
+      onTouchStart={handleTouchStart} // Handle touch hold on mobile
+      onTouchEnd={handleTouchEnd} // Handle touch release on mobile
+      onTouchMove={handleTouchMove} // Track touch movement on mobile
       onClick={handleClick}
-      className={`py-3 px-4 rounded-xl flex flex-row justify-between font-semibold unselectable ${
+      className={`py-3 px-4 rounded-xl font-semibold unselectable ${
         currentNumber >= parseInt(value, 10) && !isHeld
           ? "bg-green-500/50 text-green-700"
           : "bg-neutral-50 text-neutral-500"
       } ${currentNumber == 0 ? "bg-neutral-50" : ""}`}
     >
-      {isHeld ? (
-        <input
-          type="text"
-          name="item-comment"
-          className={`outline-none w-full placeholder:text-neutral-200 bg-transparent select-all caret-neutral-400`}
-          placeholder="Add a comment"
-          value={commentValue}
-          onChange={(e) => {
-            const newVal = e.target.value;
-            setCommentValue(newVal);
-          }}
-        />
-      ) : (
+      {
         <>
-          <h2 className="font-semibold">{name}</h2>
-          <div className="space-x-3">
-            <input
-              type="numeric"
-              name="item-number"
-              inputMode="numeric"
-              className={`outline-none w-48 text-right placeholder:text-neutral-200 bg-transparent select-all caret-neutral-400`}
-              style={{ width: `${Math.max(value.length, 1) * 4}ch` }}
-              placeholder={"0"}
-              max={value.length * 4}
-              value={currentNumber == 0 ? "" : currentNumber}
-              onFocus={() => setIsInputFocused(true)}
-              onBlur={() => setIsInputFocused(false)}
-              onChange={(e) => {
-                const newVal = e.target.value;
-                if (
-                  !isNaN(newVal as any) &&
-                  newVal.length <= value.length * 4
-                ) {
-                  setCurrentNumber(Number(newVal));
-                }
-              }}
-            />
-            <span>{"/"}</span>
-            <span>{value}</span>
+          <input
+            type="text"
+            name={`${id}_comment`}
+            className={`outline-none w-full placeholder:text-neutral-200 bg-transparent select-all caret-neutral-400 ${
+              isHeld ? "" : "hidden"
+            }`}
+            placeholder="Add a comment"
+            value={commentValue || ""}
+            onChange={(e) => {
+              const newVal = e.target.value;
+              setCommentValue(newVal);
+            }}
+          />
+
+          <div
+            className={`flex flex-row justify-between ${
+              isHeld ? "hidden" : ""
+            }`}
+          >
+            <h2 className="font-semibold">{key}</h2>
+            <div className="space-x-3">
+              <input
+                type="numeric"
+                name={`${id}_currentValue`}
+                inputMode="numeric"
+                className={`outline-none w-48 text-right placeholder:text-neutral-200 bg-transparent select-all caret-neutral-400`}
+                style={{ width: `${Math.max(value.length, 1) * 4}ch` }}
+                placeholder={"0"}
+                value={currentNumber == 0 ? "" : currentNumber}
+                onFocus={() => setIsInputFocused(true)}
+                onBlur={() => setIsInputFocused(false)}
+                onChange={(e) => {
+                  const newVal = e.target.value;
+                  if (!isNaN(newVal as any) && newVal.length <= 4) {
+                    setCurrentNumber(Number(newVal));
+                  }
+                }}
+              />
+              <span>{"/"}</span>
+              <span>{value}</span>
+            </div>
           </div>
         </>
-      )}
+      }
     </button>
   );
 }

@@ -43,6 +43,7 @@ model PackingLabel {
   currentValue  String       @default("0")
   value         String                                    // The label value (e.g., "Red", "Large")
   completed     Boolean
+  section       String?
   comment       String?
   
   packingOrder  PackingOrder @relation(fields: [packingOrderId], references: [id]) // Relation to PackingOrder

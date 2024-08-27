@@ -1,9 +1,8 @@
 import { getSession } from "@/auth/actions";
-import MostRecent from "@/components/dashboard/MostRecent";
-import OrderActions from "@/components/dashboard/OrderActions";
-import RecentlyViewed from "@/components/dashboard/RecentlyViewed";
+import ViewOrders from "@/components/dashboard/ViewOrders";
 import { db } from "@/db";
 import Navbar from "@/components/Navbar";
+import { revalidatePath } from "next/cache";
 
 function capitalize(str: string): string {
   if (!str) return str; // Guard clause for empty string
@@ -62,12 +61,39 @@ function getFullDate(date: Date): string {
 }
 
 export default async function Dashboard() {
+  revalidatePath("/dashboard");
   const session = await getSession();
 
   const user = await db.user.findUnique({ where: { email: session.email } });
 
   if (!user) {
     throw new Error("User not found");
+  }
+
+  const recentlyViewedOrders = await db.packingOrder.findMany({
+    where: {
+      author: {
+        email: session.email,
+      },
+    },
+    orderBy: {
+      lastViewedAt: "desc",
+    },
+  });
+
+  const mostRecentOrders = await db.packingOrder.findMany({
+    where: {
+      author: {
+        email: session.email,
+      },
+    },
+    orderBy: {
+      date: "asc",
+    },
+  });
+
+  if (!recentlyViewedOrders || !mostRecentOrders) {
+    throw new Error("Orders not found");
   }
 
   const today = new Date();
@@ -86,10 +112,9 @@ export default async function Dashboard() {
           </div>
         </div>
 
-        <div className="mt-10 md:px-6 space-y-8 ">
-          <OrderActions />
-          <MostRecent session={session} />
-          <RecentlyViewed session={session} />
+        <div className="my-10 md:px-6 space-y-8 ">
+          <ViewOrders title={"Recently Viewed"} orders={recentlyViewedOrders} />
+          <ViewOrders title={"Most Recent"} orders={mostRecentOrders} />
         </div>
       </div>
     </section>
