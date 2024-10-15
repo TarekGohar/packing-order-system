@@ -31,7 +31,7 @@ export default async function ProfileMenu({ session }: ProfileMenuProps) {
     <div className="flex justify-center">
       <Popover className="group">
         <PopoverButton className="transition-none flex items-center justify-center gap-x-2 focus:outline-none">
-          <h1 className="p-3 bg-neutral-100 rounded-full">{initials}</h1>
+          <h1 className="p-3 bg-neutral-100 rounded-xl">{initials}</h1>
         </PopoverButton>
         <PopoverPanel
           transition

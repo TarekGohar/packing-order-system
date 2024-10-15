@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function DropdownMenu() {
   return (
-    <div className="sm:flex justify-center hidden">
+    <div className="flex justify-center">
       <Popover className="group">
         <PopoverButton className="transition-none flex items-center justify-center gap-x-2 focus:outline-none">
           <h2 className="text-sm/6 font-normal text-neutral-400 focus:outline-none group-active:text-neutral-600 group-hover:text-neutral-500 duration-200">

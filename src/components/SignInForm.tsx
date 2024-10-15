@@ -16,14 +16,14 @@ export default function SignInForm() {
       <input
         type="email"
         name="email"
-        className="w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none"
+        className="w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none focus:border-blue-400"
         placeholder="Enter your email address"
       />
       <h1 className="mt-4">Password</h1>
       <input
         type="password"
         name="password"
-        className="w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none"
+        className="w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none focus:border-blue-400"
         placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
       />
       {state?.error && (

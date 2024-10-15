@@ -67,7 +67,5 @@ export async function submitData(data: FormData) {
       }
     }
   });
-
-  revalidatePath("/dashboard");
-  redirect("/dashboard");
+  redirect("/orders/" + orderId);
 }

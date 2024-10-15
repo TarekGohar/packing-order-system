@@ -16,12 +16,14 @@ export default function CreateNewForm() {
         <p className=" text-xs opacity-0"> </p>
       )}
 
-      <h1>Name</h1>
+      <h1>
+        Name <span className="text-red-500">*</span>
+      </h1>
       <input
         type="text"
         name="name"
         className={`form-btn ${
-          !!formState.errors.name ? "border-red-500" : "focus:border-blue-500"
+          !!formState.errors.name ? "border-red-500" : "focus:border-blue-400"
         }`}
         placeholder="Enter your first name"
       />
@@ -38,7 +40,7 @@ export default function CreateNewForm() {
         className={`form-btn ${
           !!formState.errors.location
             ? "border-red-500"
-            : "focus:border-blue-500"
+            : "focus:border-blue-400"
         }`}
         placeholder="Enter your first name"
       />
@@ -48,7 +50,9 @@ export default function CreateNewForm() {
         <p className="my-1 text-xs opacity-0">Error Message</p>
       )}
 
-      <h1>Date</h1>
+      <h1>
+        Date <span className="text-red-500">*</span>
+      </h1>
       <DatePicker error={!!formState.errors.date} />
       {!!formState.errors.date ? (
         <p className="my-1 text-xs text-red-500">{formState.errors.date}</p>
@@ -66,7 +70,7 @@ export default function CreateNewForm() {
         className={`form-btn ${
           !!formState.errors.bartenders
             ? "border-red-500"
-            : "focus:border-blue-500"
+            : "focus:border-blue-400"
         }`}
         placeholder="Enter your first name"
       />
@@ -86,7 +90,7 @@ export default function CreateNewForm() {
         step="1"
         inputMode="numeric"
         className={`form-btn ${
-          !!formState.errors.guests ? "border-red-500" : "focus:border-blue-500"
+          !!formState.errors.guests ? "border-red-500" : "focus:border-blue-400"
         }`}
         placeholder="Enter number of guests"
       />
@@ -100,7 +104,7 @@ export default function CreateNewForm() {
       <textarea
         name="notes"
         className={`form-btn ${
-          !!formState.errors.notes ? "border-red-500" : "focus:border-blue-500"
+          !!formState.errors.notes ? "border-red-500" : "focus:border-blue-400"
         }`}
         placeholder="Add any additional notes here"
       />

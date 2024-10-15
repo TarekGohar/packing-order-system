@@ -110,7 +110,7 @@ export default function OrderButton({
       onTouchEnd={handleTouchEnd} // Handle touch release on mobile
       onTouchMove={handleTouchMove} // Track touch movement on mobile
       onClick={handleClick}
-      className={`py-3 px-4 rounded-xl font-semibold unselectable ${
+      className={`py-3 px-4 w-full rounded-xl font-semibold unselectable ${
         currentNumber >= parseInt(value, 10) && !isHeld
           ? "bg-green-500/50 text-green-700"
           : "bg-neutral-50 text-neutral-500"
@@ -118,6 +118,7 @@ export default function OrderButton({
     >
       {
         <>
+          {/* Comment Section */}
           <input
             type="text"
             name={`${id}_comment`}
@@ -132,12 +133,21 @@ export default function OrderButton({
             }}
           />
 
+          {/* Label Section */}
           <div
             className={`flex flex-row justify-between ${
               isHeld ? "hidden" : ""
             }`}
           >
-            <h2 className="font-semibold">{key}</h2>
+            <div className="flex items-center gap-x-2">
+              <h2 className="font-semibold">{key}</h2>
+
+              {/* Show orange dot when comment on item */}
+              {commentValue && (
+                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+              )}
+            </div>
+
             <div className="space-x-3">
               <input
                 type="numeric"

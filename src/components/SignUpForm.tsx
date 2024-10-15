@@ -20,7 +20,9 @@ export default function SignUpForm() {
         type="text"
         name="first_name"
         className={`w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none ${
-          formState?.errors?.first_name ? "border-red-500" : ""
+          formState?.errors?.first_name
+            ? "border-red-500"
+            : "focus:border-blue-400"
         }`}
         placeholder="Enter your first name"
       />
@@ -34,7 +36,9 @@ export default function SignUpForm() {
         type="text"
         name="last_name"
         className={`w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none ${
-          formState?.errors?.last_name ? "border-red-500" : ""
+          formState?.errors?.last_name
+            ? "border-red-500"
+            : "focus:border-blue-400"
         }`}
         placeholder="Enter your last name"
       />
@@ -48,7 +52,7 @@ export default function SignUpForm() {
         type="email"
         name="email"
         className={`w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none ${
-          formState?.errors?.email ? "border-red-500" : ""
+          formState?.errors?.email ? "border-red-500" : "focus:border-blue-400"
         }`}
         placeholder="Enter your email address"
       />
@@ -60,7 +64,9 @@ export default function SignUpForm() {
         type="password"
         name="password"
         className={`w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none ${
-          formState?.errors?.password ? "border-red-500" : ""
+          formState?.errors?.password
+            ? "border-red-500"
+            : "focus:border-blue-400"
         }`}
         placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
       />
@@ -74,7 +80,9 @@ export default function SignUpForm() {
         type="password"
         name="conf_password"
         className={`w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none ${
-          formState?.errors?.conf_password ? "border-red-500" : ""
+          formState?.errors?.conf_password
+            ? "border-red-500"
+            : "focus:border-blue-400"
         }`}
         placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
       />

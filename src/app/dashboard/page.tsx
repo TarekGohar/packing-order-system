@@ -56,12 +56,11 @@ function getFullDate(date: Date): string {
   ];
 
   return `${weekdays[date.getDay()]}, ${
-    months[date.getMonth() + 1]
+    months[date.getMonth()]
   } ${date.getDate()}${getDaySuffix(date.getDate())} ${date.getFullYear()}`;
 }
 
 export default async function Dashboard() {
-  revalidatePath("/dashboard");
   const session = await getSession();
 
   const user = await db.user.findUnique({ where: { email: session.email } });
@@ -79,6 +78,7 @@ export default async function Dashboard() {
     orderBy: {
       lastViewedAt: "desc",
     },
+    take: 15,
   });
 
   const mostRecentOrders = await db.packingOrder.findMany({
@@ -90,6 +90,7 @@ export default async function Dashboard() {
     orderBy: {
       date: "asc",
     },
+    take: 15,
   });
 
   if (!recentlyViewedOrders || !mostRecentOrders) {
@@ -101,7 +102,7 @@ export default async function Dashboard() {
   return (
     <section>
       <Navbar />
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-[12px]">
         <div className="rounded-xl bg-cyan-600/40 bg-gradient-to-r from-cyan-600/40 p-8">
           <h1 className="text-3xl font-bold mb-4 text-cyan-700">Dashboard</h1>
           <div className="font-semibold text-xl text-cyan-700/90">
@@ -112,7 +113,7 @@ export default async function Dashboard() {
           </div>
         </div>
 
-        <div className="my-10 md:px-6 space-y-8 ">
+        <div className="my-10 md:px-6 space-y-8">
           <ViewOrders title={"Recently Viewed"} orders={recentlyViewedOrders} />
           <ViewOrders title={"Most Recent"} orders={mostRecentOrders} />
         </div>

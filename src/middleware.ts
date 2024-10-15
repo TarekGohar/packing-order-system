@@ -18,6 +18,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/signin", request.url));
   } else {
     const response = NextResponse.next();
+    response.headers.set(
+      "Cache-Control",
+      "no-store, no-cache, must-revalidate, proxy-revalidate"
+    );
+    response.headers.set("Pragma", "no-cache");
+    response.headers.set("Expires", "0");
     response.cookies.set("gtsession", cookie.value, {
       maxAge: 3600, // 1 hour in seconds
       httpOnly: true,

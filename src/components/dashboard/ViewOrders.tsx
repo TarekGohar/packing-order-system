@@ -67,11 +67,15 @@ export default function ViewOrders({ title, orders }: RecentlyViewedProps) {
           >
             <Link
               href={`/orders/${order.id}`}
-              className="grid grid-cols-4 truncate sm:whitespace-normal w-full py-3"
+              className="grid grid-cols-4 sm:whitespace-normal w-full py-3"
             >
-              <div className="mx-auto my-auto">{order.name}</div>
-              <div className="mx-auto my-auto">{order.location}</div>
-              <div className="mx-auto my-auto">
+              <div className="mx-auto my-auto w-full truncate px-1">
+                {order.name}
+              </div>
+              <div className="mx-auto my-auto w-full truncate">
+                {order.location}
+              </div>
+              <div className="mx-auto my-auto w-full truncate">
                 {order.date.getDate()}/{order.date.getMonth() + 1}/
                 {order.date.getFullYear()}
               </div>
