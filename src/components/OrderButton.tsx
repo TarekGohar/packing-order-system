@@ -6,11 +6,13 @@ import React, { useState, useRef, useEffect } from "react";
 interface OrderButtonProps {
   holdTime: number;
   label: PackingLabel;
+  setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function OrderButton({
   label: { id, key, value, currentValue, comment },
   holdTime = 500,
+  setIsDirty,
 }: OrderButtonProps) {
   const [isHeld, setIsHeld] = useState(false);
   const [isHolding, setIsHolding] = useState(false);
@@ -30,6 +32,8 @@ export default function OrderButton({
   const handleDoubleTap = React.useCallback(() => {
     if (!isHeld) {
       setCurrentNumber(parseInt(value, 10));
+      setIsDirty(true);
+      console.log("double tap");
     }
   }, [isHeld, value]);
 
@@ -102,9 +106,9 @@ export default function OrderButton({
   }, [tapCount, handleDoubleTap]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-    }
+    // if (e.key === "Enter") {
+    //   e.preventDefault();
+    // }
   };
 
   return (
@@ -136,6 +140,7 @@ export default function OrderButton({
             onChange={(e) => {
               const newVal = e.target.value;
               setCommentValue(newVal);
+              console.log(newVal);
             }}
             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
               if (e.key === "Enter") {
@@ -174,6 +179,8 @@ export default function OrderButton({
                 onChange={(e) => {
                   const newVal = e.target.value;
                   if (!isNaN(newVal as any) && newVal.length <= 4) {
+                    console.log("changed");
+                    setIsDirty(true);
                     setCurrentNumber(Number(newVal));
                   }
                 }}

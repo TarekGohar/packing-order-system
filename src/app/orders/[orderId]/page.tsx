@@ -86,7 +86,7 @@ function getFullDate(date: Date): string {
 export default async function page({ params, searchParams }: OrderProps) {
   const editing = "edit" in searchParams;
   let labelComplete = 0;
-  
+
   const order: PackingOrder | null = await db.packingOrder.findUnique({
     where: {
       id: params.orderId,
@@ -119,7 +119,7 @@ export default async function page({ params, searchParams }: OrderProps) {
     return (
       <section>
         <Navbar />
-        <div className="container mx-auto min-h-[80vh] space-y-8 px-[12px]">
+        <div className="container mx-auto min-h-[80vh] space-y-8 md:px-[24px] px-[12px]">
           <ShowOrderDetails labelComplete={labelComplete} order={order} />
           <ShowOrderNotes order={order} />
           <ShowOrderLabels order={order} groupedLabels={groupedLabels} />

@@ -9,9 +9,14 @@ export async function submitData(data: FormData) {
   const labelsCount = parseInt(data.get("orderLabelCount") as string, 10);
   var labelsComplete = 0;
 
+  console.log("------------------------");
+  console.log("orderId", orderId);
+  console.log("------------------------");
+  console.log("");
+
   data.forEach(async (value, key) => {
     const [id, attribute] = key.split("_");
-    if (attribute === undefined) return;
+    if (attribute === undefined || attribute === "ID") return;
 
     try {
       const updated = await db.packingLabel.update({
@@ -23,8 +28,13 @@ export async function submitData(data: FormData) {
         },
       });
 
-      if (updated.currentValue === updated.value) {
-        attribute === "currentValue" ? labelsComplete++ : null;
+      console.log("Updated label", updated);
+      if (Number(updated.currentValue) >= Number(updated.value)) {
+        console.log("Label complete");
+        if (attribute === "currentValue") {
+          labelsComplete++;
+        }
+
         await db.packingLabel.update({
           where: {
             id,
@@ -46,7 +56,7 @@ export async function submitData(data: FormData) {
     } catch (error) {
       console.error("Failed to update label", id, attribute, value);
     } finally {
-      if (labelsComplete === labelsCount) {
+      if (labelsComplete >= labelsCount) {
         await db.packingOrder.update({
           where: {
             id: orderId as string,
@@ -67,5 +77,6 @@ export async function submitData(data: FormData) {
       }
     }
   });
-  redirect("/orders/" + orderId);
+  revalidatePath(`/orders/${orderId}?edit=`);
+  redirect(`/orders/${orderId}?edit=`);
 }

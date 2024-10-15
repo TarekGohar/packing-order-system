@@ -3,9 +3,9 @@
 import React from "react";
 import OrderButton from "@/components/OrderButton";
 import { PackingLabel } from "@prisma/client";
-import Link from "next/link";
 import { addOrderItem, deleteLabel, submitData } from "@/actions";
 import { useState, useEffect } from "react";
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 interface OrderProps {
@@ -38,6 +38,7 @@ export default function ShowOrderDetailsPage({
   const [deleting, setDeleting] = useState(false);
   const [labelId, setLabelId] = useState("");
   const [value, setValue] = useState("");
+  const [isDirty, setIsDirty] = useState(false);
 
   const handleDelete = async () => {};
 
@@ -62,9 +63,15 @@ export default function ShowOrderDetailsPage({
     };
   }, [adding, deleting]);
 
+  // TODO: Remove need for save button
+
   return (
     <>
-      <form name={order.id} action={submitData}>
+      <form
+        name={order.id}
+        action={submitData}
+        onSubmit={() => setIsDirty(false)}
+      >
         <input type="hidden" name="orderId" value={order.id} />
         <input
           type="hidden"
@@ -129,7 +136,11 @@ export default function ShowOrderDetailsPage({
                       editing ? "mr-3" : ""
                     }`}
                   >
-                    <OrderButton label={label} holdTime={300} />
+                    <OrderButton
+                      label={label}
+                      holdTime={300}
+                      setIsDirty={setIsDirty}
+                    />
 
                     {/* Conditionally hidden delete button */}
                     {editing && (
@@ -165,18 +176,11 @@ export default function ShowOrderDetailsPage({
         {/* Save/Cancel Changes */}
         <div className="my-24 flex justify-end gap-x-4">
           <button
-            type="reset"
-            onClick={() => {
-              setEditing(true);
-              setEditing(false);
-            }}
-            className="bg-neutral-200/50 px-4 py-3 rounded-xl font-semibold text-neutral-400 hover:bg-neutral-200/80 active:bg-neutral-200 duration-150 unselectable"
-          >
-            Cancel
-          </button>
-          <button
             type="submit"
-            className="bg-green-600 px-4 py-3 rounded-xl font-semibold text-white hover:bg-green-700/90 active:bg-green-700 duration-150 unselectable"
+            disabled={!isDirty}
+            className={`bg-green-600 px-4 py-3 rounded-xl font-semibold text-white hover:bg-green-700/90 active:bg-green-700 duration-150 unselectable ${
+              !isDirty ? "opacity-40" : ""
+            }`}
           >
             Save Changes
           </button>
@@ -232,6 +236,7 @@ export default function ShowOrderDetailsPage({
       ) : null}
 
       {/* Adding Popup */}
+      {/* TODO: Prevent duplicate creations */}
       {adding ? (
         <div className="relative overflow-scroll">
           {/* Background Overlay */}
@@ -252,7 +257,10 @@ export default function ShowOrderDetailsPage({
               </p>
               <form
                 action={addOrderItem}
-                onSubmit={() => setDeleting(false)}
+                onSubmit={() => {
+                  setAdding(false);
+                  setValue("");
+                }}
                 className="w-full"
               >
                 <input type="hidden" name="orderId" value={order.id} />
@@ -262,6 +270,7 @@ export default function ShowOrderDetailsPage({
                 <input
                   type="text"
                   name="name"
+                  required
                   className="w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none focus:border-blue-400"
                   placeholder="Enter the item name"
                 />
@@ -272,6 +281,7 @@ export default function ShowOrderDetailsPage({
                   type="text" // Change to "text" for stricter control
                   name="quantity"
                   value={value}
+                  required
                   inputMode="numeric" // Ensures numeric keyboard on mobile devices
                   pattern="[0-9]*" // Enforces numeric input only on HTML level
                   onChange={(e) => {
