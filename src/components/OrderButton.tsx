@@ -101,6 +101,12 @@ export default function OrderButton({
     return () => clearTimeout(timer);
   }, [tapCount, handleDoubleTap]);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
+
   return (
     <button
       type="button"
@@ -130,6 +136,12 @@ export default function OrderButton({
             onChange={(e) => {
               const newVal = e.target.value;
               setCommentValue(newVal);
+            }}
+            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                setIsHeld(false);
+              }
             }}
           />
 
@@ -165,6 +177,7 @@ export default function OrderButton({
                     setCurrentNumber(Number(newVal));
                   }
                 }}
+                onKeyDown={handleKeyDown}
               />
               <span>{"/"}</span>
               <span>{value}</span>

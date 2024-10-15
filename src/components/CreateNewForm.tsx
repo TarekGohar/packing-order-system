@@ -42,7 +42,7 @@ export default function CreateNewForm() {
             ? "border-red-500"
             : "focus:border-blue-400"
         }`}
-        placeholder="Enter your first name"
+        placeholder="Enter event location"
       />
       {!!formState.errors.location ? (
         <p className="my-1 text-xs text-red-500">{formState.errors.location}</p>
@@ -72,7 +72,7 @@ export default function CreateNewForm() {
             ? "border-red-500"
             : "focus:border-blue-400"
         }`}
-        placeholder="Enter your first name"
+        placeholder="Enter number of bartenders"
       />
       {!!formState.errors.bartenders ? (
         <p className="my-1 text-xs text-red-500">
