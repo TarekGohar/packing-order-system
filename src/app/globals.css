@@ -58,3 +58,13 @@
   -o-user-select: none;
   user-select: none;
 }
+
+/* Hide Scrollbar */
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* Hide scrollbar on WebKit browsers */
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

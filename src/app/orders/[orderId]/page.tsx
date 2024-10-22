@@ -1,6 +1,5 @@
 "use server";
 
-import Navbar from "@/components/Navbar";
 import { db } from "@/db";
 import { PackingLabel } from "@prisma/client";
 import ShowOrderNotes from "@/components/orders/ShowOrderNotes";
@@ -26,9 +25,6 @@ type PackingOrder = {
 interface OrderProps {
   params: {
     orderId: string;
-  };
-  searchParams: {
-    edit: string;
   };
 }
 
@@ -83,8 +79,7 @@ function getFullDate(date: Date): string {
   } ${date.getDate()}${getDaySuffix(date.getDate())} ${date.getFullYear()}`;
 }
 
-export default async function page({ params, searchParams }: OrderProps) {
-  const editing = "edit" in searchParams;
+export default async function page({ params }: OrderProps) {
   let labelComplete = 0;
 
   const order: PackingOrder | null = await db.packingOrder.findUnique({
@@ -115,18 +110,11 @@ export default async function page({ params, searchParams }: OrderProps) {
     {}
   );
 
-  if (true) {
-    return (
-      <section>
-        <Navbar />
-        <div className="container mx-auto min-h-[80vh] space-y-8 md:px-[24px] px-[12px]">
-          <ShowOrderDetails labelComplete={labelComplete} order={order} />
-          <ShowOrderNotes order={order} />
-          <ShowOrderLabels order={order} groupedLabels={groupedLabels} />
-        </div>
-      </section>
-    );
-  } else {
-    return <div>{params.orderId}</div>;
-  }
+  return (
+    <div className="container mx-auto min-h-[80vh] space-y-8 md:px-[24px] px-[12px]">
+      <ShowOrderDetails labelComplete={labelComplete} order={order} />
+      <ShowOrderNotes order={order} />
+      <ShowOrderLabels order={order} groupedLabels={groupedLabels} />
+    </div>
+  );
 }

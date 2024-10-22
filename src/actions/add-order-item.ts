@@ -5,7 +5,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function addOrderItem(data: FormData) {
-  console.log("data", data);
   const orderId = data.get("orderId");
   const name = data.get("name");
   const quantity = data.get("quantity");

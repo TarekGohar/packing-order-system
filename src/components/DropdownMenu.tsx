@@ -33,7 +33,7 @@ export default function DropdownMenu() {
             </Link>
             <Link
               className="block rounded-lg py-2 px-3 transition hover:bg-neutral-100 active:bg-neutral-200 duration-150"
-              href="#"
+              href="/orders"
             >
               <p className="font-semibold text-black">View</p>
               <p className="text-black/50">View existing packing orders</p>

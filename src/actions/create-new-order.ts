@@ -89,6 +89,5 @@ export async function createNew(
     return { errors: { _form: ["Failed to create order"] } };
   }
 
-  console.log("Created order", order);
   redirect(`/orders/${order.id}?edit=`);
 }

@@ -36,15 +36,19 @@ export default function ViewOrders({ title, orders }: RecentlyViewedProps) {
   const emptyItemsCount = itemsPerPage - paginatedOrders.length;
   const emptyItems = Array.from({ length: emptyItemsCount }, (_, index) => (
     <li
-      key={`empty-${index}`}
-      className="bg-neutral-50/40 grid grid-cols-1 font-medium text-center text-xs text-neutral-500 divide-y hover:bg-neutral-50 duration-150"
+      key={index}
+      className="bg-neutral-50/40 grid grid-cols-1 font-normal text-left text-neutral-400 divide-y hover:bg-neutral-50 duration-150"
     >
-      <div className="grid grid-cols-4 truncate sm:whitespace-normal w-full py-3 opacity-0">
-        <div className="mx-auto my-auto">&nbsp;D</div>
-        <div className="mx-auto my-auto">&nbsp;D</div>
-        <div className="mx-auto my-auto">&nbsp;D</div>
-        <div className="mx-auto bg-green-500 py-[6px] px-[8px] rounded-2xl text-green-100">
-          Completed
+      <div className="grid grid-cols-4 sm:whitespace-normal w-full py-4">
+        <div className="mx-auto my-auto w-full truncate px-3 md:px-6"></div>
+        <div className="mx-auto my-auto w-full truncate px-3 md:px-6"></div>
+        <div className="mx-auto my-auto w-full truncate px-3 md:px-6"></div>
+
+        <div className="px-3 md:px-6 opacity-0">
+          <div className="flex items-center gap-x-2 bg-green-100 border-[1px] border-green-600 py-[4px] px-[8px] w-fit rounded-xl text-green-600">
+            <div className="h-[.4rem] w-[.4rem] rounded-full bg-green-600"></div>
+            <div className="text-sm">Completed</div>
+          </div>
         </div>
       </div>
     </li>
@@ -52,49 +56,55 @@ export default function ViewOrders({ title, orders }: RecentlyViewedProps) {
 
   return (
     <div>
-      <h1 className="text-2xl font-medium">{title}</h1>
-      <ul className="mt-4 divide-y rounded-lg overflow-hidden">
-        <div className="grid grid-cols-4 py-3 text-center text-sm text-white font-semibold bg-neutral-300 divide-x">
-          <h2>Name</h2>
-          <h2>Location</h2>
-          <h2>Date</h2>
-          <h2>Status</h2>
+      <ul className="mt-4 rounded-lg overflow-hidden border-[0.5px]">
+        <h1 className="text-2xl font-semibold px-3 md:px-6 pt-6 pb-4 text-neutral-700">
+          {title}
+        </h1>
+        <div className="grid grid-cols-4 py-4 text-left text-neutral-500 font-semibold divide-x">
+          <h2 className="px-3 md:px-6">Name</h2>
+          <h2 className="px-3 md:px-6">Location</h2>
+          <h2 className="px-3 md:px-6">Date</h2>
+          <h2 className="px-3 md:px-6">Status</h2>
         </div>
         {paginatedOrders.map((order) => (
           <li
             key={order.id}
-            className="bg-neutral-50/40 grid grid-cols-1 font-medium text-center text-xs text-neutral-500 divide-y hover:bg-neutral-50 duration-150"
+            className="bg-neutral-50/40 grid grid-cols-1 font-normal text-left text-neutral-400 divide-y hover:bg-neutral-50 duration-150"
           >
             <Link
               href={`/orders/${order.id}`}
-              className="grid grid-cols-4 sm:whitespace-normal w-full py-3"
+              className="grid grid-cols-4 sm:whitespace-normal w-full py-4"
             >
-              <div className="mx-auto my-auto w-full truncate px-1">
+              <div className="mx-auto my-auto w-full truncate px-3 md:px-6">
                 {order.name}
               </div>
-              <div className="mx-auto my-auto w-full truncate">
+              <div className="mx-auto my-auto w-full truncate px-3 md:px-6">
                 {order.location}
               </div>
-              <div className="mx-auto my-auto w-full truncate">
+              <div className="mx-auto my-auto w-full truncate px-3 md:px-6">
                 {order.date.getDate()}/{order.date.getMonth() + 1}/
                 {order.date.getFullYear()}
               </div>
 
-              {order.completed ? (
-                <div className="mx-auto bg-green-500 py-[6px] px-[8px] rounded-2xl text-green-100">
-                  Completed
-                </div>
-              ) : (
-                <div className="mx-auto bg-red-500/80 py-[6px] px-[8px] rounded-2xl text-red-100">
-                  Incomplete
-                </div>
-              )}
+              <div className="px-3 md:px-6 font-medium">
+                {order.completed ? (
+                  <div className="flex items-center gap-x-2 bg-green-100 border-[1px] border-green-600 py-[4px] px-[8px] w-fit rounded-xl text-green-600">
+                    <div className="h-[.4rem] w-[.4rem] rounded-full bg-green-600"></div>
+                    <div className="text-sm">Completed</div>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-x-2 bg-red-100 border-[1px] border-red-600 py-[4px] px-[8px] w-fit rounded-xl text-red-600">
+                    <div className="h-[.4rem] w-[.4rem] rounded-full bg-red-600"></div>
+                    <div className="text-sm">Incomplete</div>
+                  </div>
+                )}
+              </div>
             </Link>
           </li>
         ))}
         {emptyItems}
       </ul>
-      <div className="mt-2 flex justify-center gap-x-4 items-center">
+      <div className="mt-4 flex justify-center gap-x-4 items-center">
         <button
           onClick={handleClickPrev}
           disabled={currentPage === 1}
@@ -107,7 +117,7 @@ export default function ViewOrders({ title, orders }: RecentlyViewedProps) {
             height={10}
           />
         </button>
-        <span className="w-12 text-center text-neutral-600 font-medium">
+        <span className="w-12 text-center text-neutral-400 font-medium">
           {currentPage} of {totalPages}
         </span>
         <button

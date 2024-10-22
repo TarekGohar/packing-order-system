@@ -1,8 +1,6 @@
 import { getSession } from "@/auth/actions";
 import ViewOrders from "@/components/dashboard/ViewOrders";
 import { db } from "@/db";
-import Navbar from "@/components/Navbar";
-import { revalidatePath } from "next/cache";
 
 function capitalize(str: string): string {
   if (!str) return str; // Guard clause for empty string
@@ -101,7 +99,6 @@ export default async function Dashboard() {
 
   return (
     <section>
-      <Navbar />
       <div className="container mx-auto px-[12px]">
         <div className="rounded-xl bg-cyan-600/40 bg-gradient-to-r from-cyan-600/40 p-8">
           <h1 className="text-3xl font-bold mb-4 text-cyan-700">Dashboard</h1>

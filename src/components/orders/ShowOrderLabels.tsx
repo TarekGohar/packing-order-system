@@ -39,13 +39,7 @@ export default function ShowOrderDetailsPage({
   const [labelId, setLabelId] = useState("");
   const [value, setValue] = useState("");
   const [isDirty, setIsDirty] = useState(false);
-
-  const handleDelete = async () => {};
-
-  const submitForm = () => {
-    console.log("Form submitted");
-    // Add your form submission logic here (e.g., POST request)
-  };
+  const [categoryValue, setCategoryValue] = useState("");
 
   // No scroll
   useEffect(() => {
@@ -125,56 +119,58 @@ export default function ShowOrderDetailsPage({
         </div>
 
         <div className="grid grid-cols-1 gap-8">
-          {Object.keys(groupedLabels).map((section) => (
-            <div key={section}>
-              <h3 className="font-bold text-xl mb-2">{section}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {groupedLabels[section].map((label) => (
-                  <div
-                    key={label.id}
-                    className={`group flex items-center gap-x-3 ${
-                      editing ? "mr-3" : ""
-                    }`}
-                  >
-                    <OrderButton
-                      label={label}
-                      holdTime={300}
-                      setIsDirty={setIsDirty}
-                    />
+          {Object.keys(groupedLabels)
+            .sort()
+            .map((section) => (
+              <div key={section}>
+                <h3 className="font-bold text-xl mb-2">{section}</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {groupedLabels[section].map((label) => (
+                    <div
+                      key={label.id}
+                      className={`group flex items-center gap-x-3 ${
+                        editing ? "mr-3" : ""
+                      }`}
+                    >
+                      <OrderButton
+                        label={label}
+                        holdTime={300}
+                        setIsDirty={setIsDirty}
+                      />
 
-                    {/* Conditionally hidden delete button */}
-                    {editing && (
-                      <button
-                        type="reset"
-                        className="h-fit w-fit"
-                        onClick={() => {
-                          setDeleting(true);
-                          setLabelId(label.id);
-                        }}
-                      >
-                        <svg
-                          className="fill-neutral-200 hover:fill-red-500 active:text-red-600/90 duration-150"
-                          fill="FFFFFF"
-                          version="1.1"
-                          width={"16px"}
-                          height={"16px"}
-                          viewBox="0 0 41.336 41.336"
+                      {/* Conditionally hidden delete button */}
+                      {editing && (
+                        <button
+                          type="reset"
+                          className="h-fit w-fit"
+                          onClick={() => {
+                            setDeleting(true);
+                            setLabelId(label.id);
+                          }}
                         >
-                          <g>
-                            <path d="M36.335,5.668h-8.167V1.5c0-0.828-0.672-1.5-1.5-1.5h-12c-0.828,0-1.5,0.672-1.5,1.5v4.168H5.001c-1.104,0-2,0.896-2,2s0.896,2,2,2h2.001v29.168c0,1.381,1.119,2.5,2.5,2.5h22.332c1.381,0,2.5-1.119,2.5-2.5V9.668h2.001c1.104,0,2-0.896,2-2S37.438,5.668,36.335,5.668z M14.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5V35.67z M22.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5V35.67z M25.168,5.668h-9V3h9V5.668z M30.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5V35.67z" />
-                          </g>
-                        </svg>
-                      </button>
-                    )}
-                  </div>
-                ))}
+                          <svg
+                            className="fill-neutral-200 hover:fill-red-500 active:text-red-600/90 duration-150"
+                            fill="FFFFFF"
+                            version="1.1"
+                            width={"16px"}
+                            height={"16px"}
+                            viewBox="0 0 41.336 41.336"
+                          >
+                            <g>
+                              <path d="M36.335,5.668h-8.167V1.5c0-0.828-0.672-1.5-1.5-1.5h-12c-0.828,0-1.5,0.672-1.5,1.5v4.168H5.001c-1.104,0-2,0.896-2,2s0.896,2,2,2h2.001v29.168c0,1.381,1.119,2.5,2.5,2.5h22.332c1.381,0,2.5-1.119,2.5-2.5V9.668h2.001c1.104,0,2-0.896,2-2S37.438,5.668,36.335,5.668z M14.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5V35.67z M22.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5V35.67z M25.168,5.668h-9V3h9V5.668z M30.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5V35.67z" />
+                            </g>
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         {/* Save/Cancel Changes */}
-        <div className="my-24 flex justify-end gap-x-4">
+        <div className="mt-24 mb-4 flex justify-end gap-x-4">
           <button
             type="submit"
             disabled={!isDirty}
@@ -259,6 +255,7 @@ export default function ShowOrderDetailsPage({
                 action={addOrderItem}
                 onSubmit={() => {
                   setAdding(false);
+                  setCategoryValue("");
                   setValue("");
                 }}
                 className="w-full"
@@ -297,10 +294,34 @@ export default function ShowOrderDetailsPage({
                 <h1 className="mt-4">Category</h1>
                 <input
                   type="text"
+                  value={categoryValue}
                   name="category"
+                  onChange={(e) => {
+                    const newValue = e.target.value;
+                    // Only allow digits
+                    setCategoryValue(newValue); // Update value only if it's valid
+                  }}
                   className="w-full mt-2 py-2 px-2 border-2 rounded-lg font-light outline-none focus:border-blue-400"
                   placeholder="Enter the category name (default miscellaneous)"
                 />
+                {Object.keys(groupedLabels).length ? (
+                  <div className="mt-2 w-full text-center">or</div>
+                ) : null}
+                <div className="mt-3 flex overflow-hidden overflow-x-auto scroll gap-x-2">
+                  {Object.keys(groupedLabels)
+                    .sort()
+                    .filter((section) => section !== "Miscellaneous")
+                    .map((section, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        className="w-fit h-fit px-8 py-2 rounded-lg bg-blue-400 hover:bg-blue-500/80 active:bg-blue-600 duration-150 text-white"
+                        onClick={() => setCategoryValue(section)}
+                      >
+                        {section}
+                      </button>
+                    ))}
+                </div>
                 <h1 className="mt-4">Comment</h1>
                 <input
                   type="text"
@@ -308,13 +329,16 @@ export default function ShowOrderDetailsPage({
                   className="w-full my-2 py-2 px-2 border-2 rounded-lg font-light outline-none focus:border-blue-400"
                   placeholder="Enter the category name"
                 />
+
                 <div className="mt-4 w-full gap-x-2 flex items-end justify-end">
                   <button
                     type="reset"
                     onClick={() => {
                       setAdding(false);
+                      setCategoryValue("");
+                      setValue("");
                     }}
-                    className="w-full font-medium bg-neutral-300 text-white px-4 py-2 rounded-lg"
+                    className="w-full font-medium bg-neutral-300 hover:bg-neutral-400/80 active:bg-neutral-400 duration-150 text-white px-4 py-2 rounded-lg"
                   >
                     Cancel
                   </button>

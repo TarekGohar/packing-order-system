@@ -5,10 +5,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function changeOrderNotes(data: FormData) {
-  console.log("data", data);
   const orderId = data.get("orderId");
   const notes = data.get("notes");
-  console.log("orderId", orderId);
 
   await db.packingOrder.update({
     where: {

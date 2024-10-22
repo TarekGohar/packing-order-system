@@ -7,6 +7,20 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true, // Center the container by default
+      padding: "1rem", // Default padding for the container
+      screens: {
+        // Custom breakpoints for container widths
+        sm: "100%", // Full width on small screens
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1440px", // You can adjust these as needed
+        "3xl": "1600px", // Custom screen size for 3xl
+        "4xl": "1920px", // Custom screen size for 4xl
+      },
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

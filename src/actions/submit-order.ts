@@ -9,11 +9,6 @@ export async function submitData(data: FormData) {
   const labelsCount = parseInt(data.get("orderLabelCount") as string, 10);
   var labelsComplete = 0;
 
-  console.log("------------------------");
-  console.log("orderId", orderId);
-  console.log("------------------------");
-  console.log("");
-
   data.forEach(async (value, key) => {
     const [id, attribute] = key.split("_");
     if (attribute === undefined || attribute === "ID") return;
@@ -28,9 +23,7 @@ export async function submitData(data: FormData) {
         },
       });
 
-      console.log("Updated label", updated);
       if (Number(updated.currentValue) >= Number(updated.value)) {
-        console.log("Label complete");
         if (attribute === "currentValue") {
           labelsComplete++;
         }

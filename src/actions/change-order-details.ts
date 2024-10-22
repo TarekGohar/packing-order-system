@@ -8,7 +8,6 @@ export async function changeOrderDetails(data: FormData) {
   const orderId = data.get("orderId");
   const name = data.get("order-name");
   const location = data.get("order-location");
-  console.log("orderId", orderId);
 
   await db.packingOrder.update({
     where: {
