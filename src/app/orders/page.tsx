@@ -1,4 +1,3 @@
-import { getSession } from "@/auth/actions";
 import DropdownSelector from "@/components/DropdownSelector";
 import { db } from "@/db";
 import OrdersViewer from "@/components/orders/OrdersViewer";

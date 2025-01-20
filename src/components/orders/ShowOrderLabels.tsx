@@ -96,6 +96,14 @@ export default function ShowOrderDetailsPage({
               </svg>
             </button>
 
+            <button
+              type="reset"
+              onClick={() => setAdding(!adding)}
+              className="text-neutral-500 rounded-md w-max p-[2px] duration-150"
+            >
+              Add New Item
+            </button>
+
             {/* Edit Button */}
             <button
               type="reset"
